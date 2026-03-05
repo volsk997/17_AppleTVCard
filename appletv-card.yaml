@@ -154,7 +154,7 @@ cards:
                 {% elif is_state_attr(config.entity, 'app_id', 'com.google.ios.youtube')%} mdi:youtube
                 {% elif is_state_attr(config.entity, 'app_id', 'com.apple.TVAirPlay')%} mdi:cast-audio-variant
                 {% elif is_state_attr(config.entity, 'app_id', 'com.apple.TVWatchList')%} mdi:sleep
-                {% elif is_state_attr(config.entity, 'app_id', 'com.apple.TVMusic')%} mdi:sleep
+                {% elif is_state_attr(config.entity, 'app_id', 'com.apple.TVMusic')%} fa6-brands:itunes-note
                 {% elif is_state_attr(config.entity, 'app_id', 'org.videolan.vlc-ios')%} mdi:vlc
                 {% elif is_state_attr(config.entity, 'app_id', 'ru.ivi')%} phu:ivi-tv
                 {% else %} mdi:sleep
@@ -194,13 +194,13 @@ cards:
             {% set top = 0 %}
             {% set chip_height = 48 %}
             {% include 'title_chips_scrollable.jinja' %}
+    grid_options:
+      columns: 6
+      rows: auto
     card_mod:
       style: |
         {% set top = 100 %}
         {% include 'fixed_settings.jinja' %}
-    grid_options:
-      columns: 6
-      rows: auto
   - type: conditional
     conditions:
       - condition: state
@@ -630,6 +630,37 @@ cards:
                   {% set hover = 'true' %}
                   {% set stating = 'false' %}
                   {% include 'chip_settings_style.jinja' %}
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: media_player.gostinaia
+                state_not: standby
+            chip:
+              type: template
+              entity: sensor.appletv_app
+              tap_action:
+                action: perform-action
+                perform_action: media_player.select_source
+                target:
+                  entity_id: media_player.gostinaia
+                data:
+                  source: Музыка
+              icon: fa6-brands:itunes-note
+              icon_color: |-
+                {% if is_state(config.entity, 'Музыка')%} pink
+                {% else %} '1'
+                {% endif %}
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              card_mod:
+                style:
+                  .: |
+                    {% set hover = 'true' %}
+                    {% set stating = 'true' %}
+                    {% set state_on = 'Музыка' %}
+                    {% include 'chip_settings_style.jinja' %}
           - type: conditional
             conditions:
               - condition: state
