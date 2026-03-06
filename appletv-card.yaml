@@ -272,7 +272,10 @@ cards:
                   {% else %} {{state_attr(config.entity, 'media_artist')}} 
                   {% endif %}
                 {% elif is_state_attr(config.entity, 'app_id', 'com.apple.TVWatchList')%} AppleTV+
-                {% elif is_state_attr(config.entity, 'app_id', 'com.apple.TVMusic')%} Apple Music
+                {% elif is_state_attr(config.entity, 'app_id', 'com.apple.TVMusic')%}
+                         {% if state_attr(config.entity, 'media_artist') == '' %}Apple Music
+                         {% else %} {{ state_attr(config.entity, 'media_artist')|truncate(100) }}
+                         {% endif %}
                 {% elif is_state_attr(config.entity, 'app_id', 'org.videolan.vlc-ios')%} VLC
                 {% elif is_state_attr(config.entity, 'app_id', 'ru.ivi')%} Иви
                 {% else %} Воспроизведение
