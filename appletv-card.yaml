@@ -92,7 +92,7 @@ cards:
              }
   - type: custom:mushroom-template-card
     features_position: bottom
-    entity: media_player.homepod_mini_gost
+    entity: media_player.gostinaia
     grid_options:
       columns: 12
       rows: auto
