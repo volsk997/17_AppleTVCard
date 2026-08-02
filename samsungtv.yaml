@@ -1,0 +1,430 @@
+type: custom:bubble-card
+card_type: pop-up
+hash: "#samsungtv"
+name: Samsung HW-B550
+icon: mdi:soundbar
+margin_top_mobile: calc(100vh - 550px)
+margin_top_desktop: calc(100vh - 500px)
+show_header: false
+close_by_clicking_outside: false
+backdrop_blur: "5"
+bg_blur: "100"
+bg_opacity: "50"
+button_type: name
+bg_color: "#000"
+styles: |
+  #root {
+    border: 1px solid rgba(var(--rgb-primary-text-color),0.1);
+    background: rgba(255, 255, 255, 0.1);
+    }
+sub_button:
+  main: []
+  bottom: []
+cards:
+  - type: custom:mushroom-chips-card
+    chips:
+      - type: template
+        content: Samsung TV IR
+        double_tap_action:
+          action: none
+        tap_action:
+          action: none
+        hold_action:
+          action: none
+        icon: ""
+      - type: spacer
+      - type: back
+        card_mod:
+          style:
+            .: |
+              {% set hover = 'true' %}
+              {% set stating = 'false' %}
+              {% include 'chip_settings_style.jinja' %}
+    card_mod:
+      style:
+        mushroom-back-chip:nth-child(3)$: |
+          ha-state-icon {
+            --card-mod-icon: mdi:close;
+          }
+        .: |
+          {% include 'pop_up_title.jinja' %}
+    grid_options:
+      columns: 12
+      rows: auto
+  - type: custom:stack-in-card
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            icon: mdi:power
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.universal_remote
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: power
+                device: tv
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            entity: ""
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: template
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.universal_remote
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: 123
+                device: tv
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon: mdi:numeric
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: template
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.universal_remote
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: colors
+                device: tv
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon: mdi:gamepad-circle
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+        alignment: justify
+        card_mod:
+          style: |
+            {% set left = 20 %}
+            {% set top = 20 %}
+            {% set right = 20 %}
+            {% set bottom = 20 %}
+            {% include 'pop_up_buttons.jinja' %}
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.universal_remote
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: mute
+                device: tv
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon: mdi:volume-mute
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: template
+            icon: mdi:circle-small
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.universal_remote
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: up
+                device: tv
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: template
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.universal_remote
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: play
+                device: tv
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon: mdi:play-pause
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+        alignment: justify
+        card_mod:
+          style: |
+            {% set left = 20 %}
+            {% set right = 20 %}
+            {% set bottom = 5 %}
+            {% include 'pop_up_buttons.jinja' %}
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.universal_remote
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: volume-
+                device: tv
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon: mdi:volume-medium
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: spacer
+          - type: template
+            icon: mdi:circle-small
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.universal_remote
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: left
+                device: tv
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: template
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.universal_remote
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: ok
+                device: tv
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon: mdi:circle-medium
+            icon_color: "1"
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: template
+            icon: mdi:circle-small
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.universal_remote
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: right
+                device: tv
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: spacer
+          - type: template
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.universal_remote
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: volume+
+                device: tv
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon: mdi:volume-high
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+        alignment: center
+        card_mod:
+          style: |
+            {% set left = 20 %}
+            {% set right = 20 %}
+            {% set bottom = 5 %}
+            {% include 'pop_up_buttons.jinja' %}
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            icon: mdi:arrow-u-left-top
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.universal_remote
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: back
+                device: tv
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: template
+            icon: mdi:circle-small
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.universal_remote
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: down
+                device: tv
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: template
+            icon: mdi:home
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.universal_remote
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: home
+                device: tv
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+        alignment: justify
+        card_mod:
+          style: |
+            {% set left = 20 %}
+            {% set top = 0 %}
+            {% set right = 20 %}
+
+            {% include 'pop_up_buttons.jinja' %}
+    card_mod:
+      style:
+        .: |
+          ha-card {
+            background: transparent !important;
+            border-width: 0px;
+              }
+    grid_options:
+      columns: 12
+      rows: auto
+popup_mode: default
