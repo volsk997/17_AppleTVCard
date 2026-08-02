@@ -1,0 +1,382 @@
+type: custom:bubble-card
+card_type: pop-up
+hash: "#apple_tv_remote"
+margin_top_mobile: auto
+margin_top_desktop: auto
+margin: 7px
+width_desktop: 540px
+show_header: false
+close_by_clicking_outside: false
+backdrop_blur: "5"
+bg_blur: "100"
+bg_opacity: "50"
+button_type: name
+bg_color: "#000"
+styles: |
+  #root {
+    border: 1px solid rgba(var(--rgb-primary-text-color),0.1);
+    background: rgba(255, 255, 255, 0.1);
+    }
+sub_button:
+  main: []
+  bottom: []
+cards:
+  - type: custom:mushroom-chips-card
+    chips:
+      - type: template
+        content: ""
+        double_tap_action:
+          action: none
+        tap_action:
+          action: none
+        hold_action:
+          action: none
+        icon: ""
+      - type: spacer
+      - type: back
+        card_mod:
+          style:
+            .: |
+              {% set hover = 'true' %}
+              {% set stating = 'false' %}
+              {% include 'chip_settings_style.jinja' %}
+    card_mod:
+      style:
+        mushroom-back-chip:nth-child(3)$: |
+          ha-state-icon {
+            --card-mod-icon: mdi:close;
+          }
+        .: |
+          {% include 'pop_up_title.jinja' %}
+    grid_options:
+      columns: 12
+      rows: auto
+  - type: custom:stack-in-card
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.gostinaia
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: menu
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon: fas:chevron-left
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: template
+            icon: mdi:circle-small
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.gostinaia
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: up
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: template
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.gostinaia
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: home
+            hold_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.gostinaia
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: top_menu
+            double_tap_action:
+              action: none
+            icon: fas:display
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+        alignment: justify
+        card_mod:
+          style: |
+            {% set left = 20 %}
+            {% set top = 20 %}
+            {% set right = 20 %}
+            {% set bottom = 5 %}
+            {% include 'pop_up_buttons.jinja' %}
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            icon: fas:volume-low
+            tap_action:
+              action: perform-action
+              perform_action: media_player.volume_down
+              target:
+                entity_id:
+                  - media_player.samsung
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: spacer
+          - type: template
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.gostinaia
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: left
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon: mdi:circle-small
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: template
+            icon: mdi:circle-medium
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.gostinaia
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: select
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: template
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.gostinaia
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: right
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon: mdi:circle-small
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: spacer
+          - type: template
+            icon: fas:volume-high
+            tap_action:
+              action: perform-action
+              perform_action: media_player.volume_up
+              target:
+                entity_id: media_player.samsung
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+        alignment: center
+        card_mod:
+          style: |
+            {% set left = 20 %}
+            {% set right = 20 %}
+            {% set bottom = 5 %}
+            {% include 'pop_up_buttons.jinja' %}
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            icon: mdi:rewind-10
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.gostinaia
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: skip_backward
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: template
+            icon: mdi:circle-small
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.gostinaia
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command: down
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: template
+            icon: mdi:fast-forward-10
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            tap_action:
+              action: perform-action
+              perform_action: remote.send_command
+              target:
+                entity_id: remote.gostinaia
+              data:
+                num_repeats: 1
+                delay_secs: 0.4
+                hold_secs: 0
+                command:
+                  - skip_forward
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+        alignment: justify
+        card_mod:
+          style: |
+            {% set left = 20 %}
+            {% set top = 0 %}
+            {% set right = 20 %}
+
+            {% include 'pop_up_buttons.jinja' %}
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            tap_action:
+              action: navigate
+              navigation_path: "#soundbar"
+            icon: mdi:soundbar
+            icon_color: "1"
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+          - type: spacer
+          - type: template
+            tap_action:
+              action: navigate
+              navigation_path: "#samsungtv"
+            icon: mdi:remote
+            icon_color: "1"
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            card_mod:
+              style:
+                .: |
+                  {% set hover = 'true' %}
+                  {% set stating = 'false' %}
+                  {% include 'chip_settings_style.jinja' %}
+        alignment: center
+        card_mod:
+          style: |
+            {% set left = 20 %}
+            {% set right = 20 %}
+            {% set bottom = 5 %}
+            {% include 'pop_up_buttons.jinja' %}
+    card_mod:
+      style:
+        .: |
+          ha-card {
+            margin-top: 0px;
+            background: transparent !important;
+            border-width: 0px;
+              }
+    grid_options:
+      columns: 12
+      rows: auto
+popup_mode: default
