@@ -36,6 +36,21 @@ cards:
           action: none
         icon: phu:apple-tv
       - type: spacer
+      - type: template
+        entity: media_player.gostinaia
+        double_tap_action:
+          action: none
+        tap_action:
+          action: more-info
+        hold_action:
+          action: none
+        icon: mdi:information
+        card_mod:
+          style:
+            .: |
+              {% set hover = 'true' %}
+              {% set stating = 'false' %}
+              {% include 'chip_settings_style.jinja' %}
       - type: back
         card_mod:
           style:
@@ -323,6 +338,8 @@ cards:
         state_not: unavailable
       - condition: state
         state_not: standby
+      - condition: state
+        state_not: "off"
 popup_mode: default
 card_layout: large
 slide_to_close_distance: "500"
