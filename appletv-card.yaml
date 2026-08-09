@@ -1,6 +1,6 @@
 type: custom:bubble-card
 card_type: pop-up
-hash: "#apple_tv"
+hash: '#apple_tv'
 margin_top_mobile: auto
 margin_top_desktop: auto
 tap_action:
@@ -11,9 +11,9 @@ hold_action:
   action: none
 show_header: false
 close_by_clicking_outside: false
-backdrop_blur: "5"
-bg_blur: "100"
-bg_opacity: "50"
+backdrop_blur: '5'
+bg_blur: '100'
+bg_opacity: '50'
 button_type: name
 styles: |
   #root {
@@ -36,6 +36,48 @@ cards:
           action: none
         icon: phu:apple-tv
       - type: spacer
+      - type: template
+        tap_action:
+          action: none
+        hold_action:
+          action: none
+        double_tap_action:
+          action: none
+        content: ''
+        icon: mdi:sync-alert
+        icon_color: >
+          {% if states('media_player.gostinaia')  in ['unavailable','off',
+          'standby'] and states('media_player.samsungtv') == 'off' %}
+             0,0,0,0
+           {% elif states('media_player.samsungtv') == 'on' and states('media_player.gostinaia') not in ['unavailable','off', 'standby'] %}
+             0,0,0,0
+           {% else %}
+             red
+           {% endif %}
+      - type: template
+        entity: sensor.vremia_raboty_tv
+        content: |
+          {% if states(entity)|float(0) > 0.01 %}
+            {% set total_hours = states(entity) | float(0) %}
+            {% set hours = total_hours | int %}
+            {% set minutes = ((total_hours - hours) * 60) | int %}
+            {{ hours }}:{{ '%02d' | format(minutes) }}
+          {% else %} {% endif %}
+        double_tap_action:
+          action: none
+        tap_action:
+          action: more-info
+        hold_action:
+          action: none
+        icon: |
+          {% if states(entity)|int > 0 %}mdi:clock-check
+          {% else %}mdi:clock-check-outline{% endif %}
+        card_mod:
+          style:
+            .: |
+              {% set hover = 'true' %}
+              {% set stating = 'false' %}
+              {% include 'chip_settings_style.jinja' %}
       - type: template
         entity: media_player.gostinaia
         double_tap_action:
@@ -82,7 +124,7 @@ cards:
         double_tap_action:
           action: none
         icon: phu:apple-tv
-        icon_color: "1"
+        icon_color: '1'
         card_mod:
           style:
             .: |
@@ -97,14 +139,7 @@ cards:
     card_mod:
       style:
         .: |
-          ha-card {
-             --chip-background: none !important;
-             --chip-border-radius: 1000px;
-             zoom: 6;
-             #--chip-height: 200px;
-             --chip-spacing: {{chip_spacing|default(0)}}px;
-             margin: 2px;
-             }
+          {% include 'big_button_popup.jinja' %}
   - type: custom:mushroom-template-card
     features_position: bottom
     entity: media_player.gostinaia
@@ -142,6 +177,7 @@ cards:
                  {% endif %}
         {% elif is_state_attr(config.entity, 'app_id', 'org.videolan.vlc-ios')%} VLC
         {% elif is_state_attr(config.entity, 'app_id', 'ru.ivi')%} Иви
+        {% elif is_state_attr(config.entity, 'app_id', 'com.gruppainnova.films')%} {{state_attr(config.entity, 'media_artist')}} 
         {% else %} Воспроизведение
         {% endif %}
 
@@ -153,7 +189,7 @@ cards:
       style: |
         ha-card {
           zoom: 1.5;
-          background: none;
+          background: none !important;
         }
   - type: conditional
     conditions:
@@ -162,7 +198,7 @@ cards:
         state_not: unavailable
       - condition: state
         entity: binary_sensor.appletv_media_progress
-        state: "on"
+        state: 'on'
     card:
       entity: media_player.homepod_mini_gost
       tap_action: none
@@ -214,76 +250,94 @@ cards:
           style: |
             ha-card {
               zoom: 1.5;
-              background: none;
+              background: none !important;
             }
-      - type: custom:mushroom-template-card
-        features_position: bottom
-        entity: media_player.gostinaia
-        grid_options:
-          columns: 12
-          rows: auto
-        icon: mdi:skip-previous
-        tap_action:
-          action: perform-action
-          perform_action: media_player.media_previous_track
-          target:
-            entity_id: media_player.gostinaia
-        vertical: true
-        icon_tap_action:
-          action: none
-        color: white
-        card_mod:
-          style: |
-            ha-card {
-              zoom: 1.5;
-              background: none;
-            }
-      - type: custom:mushroom-template-card
-        features_position: bottom
-        entity: media_player.gostinaia
-        grid_options:
-          columns: 12
-          rows: auto
-        tap_action:
-          action: perform-action
-          perform_action: media_player.media_play_pause
-          target:
-            entity_id:
-              - media_player.gostinaia
-        vertical: true
-        icon: |
-          {% if is_state(entity, 'playing')%} fas:pause
-          {% elif is_state(entity, 'paused')%} fas:play
-          {% else %}fas:lock{% endif%}
-        color: white
-        card_mod:
-          style: |
-            ha-card {
-              zoom: 1.5;
-              background: none;
-            }
-      - type: custom:mushroom-template-card
-        features_position: bottom
-        entity: media_player.gostinaia
-        grid_options:
-          columns: 12
-          rows: auto
-        icon: mdi:skip-next
-        tap_action:
-          action: perform-action
-          perform_action: media_player.media_next_track
-          target:
-            entity_id: media_player.gostinaia
-        vertical: true
-        icon_tap_action:
-          action: none
-        color: white
-        card_mod:
-          style: |
-            ha-card {
-              zoom: 1.5;
-              background: none;
-            }
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: media_player.gostinaia
+            state_not: 'off'
+        card:
+          type: custom:mushroom-template-card
+          features_position: bottom
+          entity: media_player.gostinaia
+          grid_options:
+            columns: 12
+            rows: auto
+          icon: mdi:skip-previous
+          tap_action:
+            action: perform-action
+            perform_action: media_player.media_previous_track
+            target:
+              entity_id: media_player.gostinaia
+          vertical: true
+          icon_tap_action:
+            action: none
+          color: white
+          card_mod:
+            style: |
+              ha-card {
+                zoom: 1.5;
+                background: none !important;
+              }
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: media_player.gostinaia
+            state_not: 'off'
+        card:
+          type: custom:mushroom-template-card
+          features_position: bottom
+          entity: media_player.gostinaia
+          grid_options:
+            columns: 12
+            rows: auto
+          tap_action:
+            action: perform-action
+            perform_action: media_player.media_play_pause
+            target:
+              entity_id:
+                - media_player.gostinaia
+          vertical: true
+          icon: |
+            {% if is_state(entity, 'playing')%} fas:pause
+            {% elif is_state(entity, 'paused')%} fas:play
+            {% else %}fas:lock{% endif%}
+          color: white
+          card_mod:
+            style: |
+              ha-card {
+                zoom: 1.5;
+                background: none !important;
+              }
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: media_player.gostinaia
+            state_not: 'off'
+        card:
+          type: custom:mushroom-template-card
+          features_position: bottom
+          entity: media_player.gostinaia
+          grid_options:
+            columns: 12
+            rows: auto
+          icon: mdi:skip-next
+          tap_action:
+            action: perform-action
+            perform_action: media_player.media_next_track
+            target:
+              entity_id: media_player.gostinaia
+          vertical: true
+          icon_tap_action:
+            action: none
+          color: white
+          card_mod:
+            style: |
+              ha-card {
+                zoom: 1.5;
+                background: none !important;
+              }
       - type: custom:mushroom-template-card
         features_position: bottom
         entity: light.embi_lampa
@@ -293,7 +347,7 @@ cards:
         color: white
         tap_action:
           action: navigate
-          navigation_path: "#apple_tv_remote"
+          navigation_path: '#apple_tv_remote'
         icon: phu:apple-tv-gen2-remote
         vertical: true
         icon_tap_action:
@@ -302,21 +356,33 @@ cards:
           style: |
             ha-card {
               zoom: 1.5;
-              background: none;
+              background: none !important;
             }
     card_mod:
       style: |
         ha-card {
-         background: none !important;
+          background: none !important;
         }
   - type: custom:mushroom-media-player-card
-    entity: media_player.gostinaia
+    entity: media_player.samsungtv
     volume_controls:
       - volume_set
     layout: horizontal
     primary_info: none
     secondary_info: none
     icon_type: none
+    visibility:
+      - condition: state
+        entity: media_player.gostinaia
+        state_not: unavailable
+      - condition: state
+        entity: media_player.gostinaia
+        state_not: standby
+      - condition: state
+        entity: media_player.gostinaia
+        state_not: 'off'
+      - condition: state
+        state_not: unavailable
     card_mod:
       style:
         mushroom-media-player-volume-control$: |
@@ -333,13 +399,6 @@ cards:
             border-width: 0px;
             margin: 0px 0px 0px;
           }
-    visibility:
-      - condition: state
-        state_not: unavailable
-      - condition: state
-        state_not: standby
-      - condition: state
-        state_not: "off"
 popup_mode: default
 card_layout: large
-slide_to_close_distance: "500"
+slide_to_close_distance: '500'
