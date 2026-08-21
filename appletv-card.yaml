@@ -11,14 +11,11 @@ hold_action:
   action: none
 show_header: false
 close_by_clicking_outside: false
-backdrop_blur: '5'
-bg_blur: '100'
-bg_opacity: '50'
 button_type: name
 styles: |
   #root {
     border: 1px solid rgba(var(--rgb-primary-text-color),0.1);
-    background: rgba(255, 255, 255, 0.1); 
+     
     }
 sub_button:
   main: []
@@ -27,7 +24,7 @@ cards:
   - type: custom:mushroom-chips-card
     chips:
       - type: template
-        content: AppleTV (Гостиная)
+        content: AppleTV
         double_tap_action:
           action: none
         tap_action:
@@ -57,7 +54,7 @@ cards:
       - type: template
         entity: sensor.vremia_raboty_tv
         content: |
-          {% if states(entity)|float(0) > 0.01 %}
+          {% if states(entity)|float(0) > 0.001 %}
             {% set total_hours = states(entity) | float(0) %}
             {% set hours = total_hours | int %}
             {% set minutes = ((total_hours - hours) * 60) | int %}
@@ -152,7 +149,7 @@ cards:
     icon_tap_action:
       action: none
     primary: |-
-      {% if is_state(config.entity, 'playing')%} 
+      {% if states(config.entity) in  ['playing', 'paused']%} 
         {% if is_state_attr(config.entity, 'app_id', 'com.apple.TVAirPlay') and state_attr(config.entity, 'media_title') == '' %} 
         {{state_attr(config.entity, 'app_name')}}
         {% else %} 
@@ -163,7 +160,7 @@ cards:
         {% else %}  TV
       {% endif %}
     secondary: |
-      {% if is_state(config.entity, 'playing')%} 
+      {% if states(config.entity) in  ['playing', 'paused']%} 
         {% if is_state_attr(config.entity, 'app_id', 'ru.kinopoisk')%} Кинопоиск
         {% elif is_state_attr(config.entity, 'app_id', 'com.google.ios.youtube')%} YouTube
         {% elif is_state_attr(config.entity, 'app_id', 'com.apple.TVAirPlay')%} 
@@ -182,7 +179,6 @@ cards:
         {% endif %}
 
       {% elif is_state(config.entity, 'off')%} Сон
-      {% elif is_state(config.entity, 'paused')%} Пауза
       {% else %} Бездействие
       {% endif %}
     card_mod:
